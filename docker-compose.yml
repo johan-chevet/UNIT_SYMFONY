@@ -1,13 +1,14 @@
 services:
   app:
-    build:
-      context: .
+    image: php:8.3-fpm
     container_name: symfony_app
     working_dir: /var/www/html
     volumes:
       - ./app:/var/www/html # Code source persistant
       - app_logs:/var/log/php # Logs PHP
       - app_cache:/var/www/html/var # Cache et sessions Symfony
+    command: >
+      bash -c "chown -R www-data:www-data var && php-fpm"
     networks:
       - symfony_network
 
